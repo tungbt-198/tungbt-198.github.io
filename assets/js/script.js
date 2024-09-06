@@ -18,8 +18,6 @@ const srtop = ScrollReveal({
     duration: 1000,
     reset: true
 });
-
-/* SCROLL HOME */
 srtop.reveal('.home .content h3', { delay: 200 });
 srtop.reveal('.home .content p', { delay: 200 });
 srtop.reveal('.home .content .btn', { delay: 200 });
@@ -33,7 +31,6 @@ srtop.reveal('.home .whatsapp', { interval: 600 });
 srtop.reveal('.home .facebook', { interval: 600 });
 
 particlesJS('particles-js',
-
     {
         "particles": {
             "number": {
@@ -152,3 +149,43 @@ particlesJS('particles-js',
     }
 
 );
+
+document.addEventListener('DOMContentLoaded', function () {
+    const restrictedKeys = [
+        { ctrl: true, shift: true, keyCode: 'I'.charCodeAt(0) },  // Ctrl+Shift+I (Inspect)
+        { ctrl: true, shift: true, keyCode: 'C'.charCodeAt(0) },  // Ctrl+Shift+C (Console)
+        { ctrl: true, shift: true, keyCode: 'J'.charCodeAt(0) },  // Ctrl+Shift+J (Debugger)
+        { ctrl: true, keyCode: 'U'.charCodeAt(0) },               // Ctrl+U (View Source)
+        { keyCode: 123 }                                          // F12 (Dev Tools)
+    ];
+
+    function isRestrictedKey(e) {
+        return restrictedKeys.some(function (combination) {
+            return (
+                (combination.ctrl === undefined || combination.ctrl === e.ctrlKey) &&
+                (combination.shift === undefined || combination.shift === e.shiftKey) &&
+                combination.keyCode === e.keyCode
+            );
+        });
+    }
+
+    document.addEventListener('keydown', function (e) {
+        if (isRestrictedKey(e)) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+    });
+
+    document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+        return false;
+    });
+
+    document.addEventListener('touchstart', function (e) {
+        if (e.touches.length > 2) {
+            e.preventDefault();
+            return false;
+        }
+    });
+});
